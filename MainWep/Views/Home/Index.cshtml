@@ -1,0 +1,33 @@
+﻿@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    @(Html.Kendo().Grid<MainWep.Models.StudentVM>()
+                      .Name("studentGrid")
+                      .Columns(columns =>
+                      {
+
+                          columns.Bound(c => c.StudentId).Visible(false);
+                          columns.Bound(c => c.Name).Width(150);
+                          columns.Bound(c => c.Age).Width(150);
+                          columns.Bound(c => c.collage).Width(150);
+                          columns.Bound(c => c.Gender).Width(150);
+                          columns.Bound(c => c.IsActive).Width(50);
+                      })
+                      .HtmlAttributes(new { style = "height: 550px;" })
+        .Pageable()
+        .Sortable(x => x.Enabled(true))
+        .Scrollable(x => x.Enabled(true))
+        .Resizable(resize => resize.Columns(true))
+        .Reorderable(x => x.Columns(true))
+        .Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Enabled(true))
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(25)
+        .Read(read => read.Action("GetStudents", "Home")))
+
+
+    )
+</div>
